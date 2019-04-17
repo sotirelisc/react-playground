@@ -1,7 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import ContentEditable from 'react-contenteditable';
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
 import { updateText } from '../actions';
+
+const UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => (
+  <p>
+    <button onClick={onUndo} disabled={!canUndo}>
+      Undo
+    </button>
+    <button onClick={onRedo} disabled={!canRedo}>
+      Redo
+    </button>
+  </p>
+);
 
 class Editor extends React.Component {
   constructor() {
@@ -21,6 +33,7 @@ class Editor extends React.Component {
           html={this.props.text}
           onChange={this.handleChange}
         />
+        <UndoRedo {...this.props} />
       </div>
     );
   }
@@ -28,8 +41,21 @@ class Editor extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    text: state.textData.text
+    text: state.textData.present.text,
+    canUndo: state.textData.past.length > 0,
+    canRedo: state.textData.future.length > 0
   };
 };
 
-export default connect(mapStateToProps, { updateText })(Editor);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateText: text => dispatch(updateText(text)),
+    onUndo: () => dispatch(UndoActionCreators.undo()),
+    onRedo: () => dispatch(UndoActionCreators.redo())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Editor);

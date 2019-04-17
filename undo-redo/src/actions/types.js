@@ -1,1 +1,1 @@
-export const UPDATE_TEXT = 'UPDATE TEXT';
+export const UPDATE_TEXT = 'UPDATE_TEXT';

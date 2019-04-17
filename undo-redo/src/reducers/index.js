@@ -2,5 +2,5 @@ import { combineReducers } from 'redux';
 import TextReducer from './TextReducer';
 
 export default combineReducers({
-  text: TextReducer
+  textData: TextReducer
 });

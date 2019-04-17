@@ -1,12 +1,13 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
 import Editor from './Editor';
 
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <Container>
         <Editor />
-      </div>
+      </Container>
     );
   }
 }

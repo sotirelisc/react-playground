@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import ContentEditable from 'react-contenteditable';
-import { ActionCreators as UndoActionCreators } from 'redux-undo'
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
+import { Button, Icon, Segment, Form } from 'semantic-ui-react';
 import { updateText } from '../actions';
+import Header from './Header';
 
 const UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => (
   <p>
-    <button onClick={onUndo} disabled={!canUndo}>
-      Undo
-    </button>
-    <button onClick={onRedo} disabled={!canRedo}>
-      Redo
-    </button>
+    <Button onClick={onUndo} disabled={!canUndo} icon>
+      <Icon name='undo' />
+    </Button>
+    <Button onClick={onRedo} disabled={!canRedo} icon>
+      <Icon name='redo' />
+    </Button>
   </p>
 );
 
@@ -28,11 +30,17 @@ class Editor extends React.Component {
   render() {
     return (
       <div>
-        <ContentEditable
-          innerRef={this.contentEditable}
-          html={this.props.text}
-          onChange={this.handleChange}
-        />
+        <Header title="Editor" />
+        <Segment>
+          <Form>
+            <ContentEditable
+              innerRef={this.contentEditable}
+              html={this.props.text}
+              onChange={this.handleChange}
+              className="ui textarea"
+            />
+          </Form>
+        </Segment>
         <UndoRedo {...this.props} />
       </div>
     );

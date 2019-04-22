@@ -23,8 +23,15 @@ export const signOut = () => {
   };
 };
 
-export const createStream = formValues => async dispatch => {
-  const response = await streams.post('/streams', formValues);
+// Use redux-thunk's getState argument to get userId
+export const createStream = formValues => async (dispatch, getState) => {
+  const { userId } = getState().auth;
+  
+  // Create stream with form data & current userId
+  const response = await streams.post('/streams', {
+    ...formValues,
+    userId
+  });
 
   dispatch({
     type: CREATE_STREAM,

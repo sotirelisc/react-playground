@@ -15,13 +15,13 @@ export default (state = initialState, action) => {
         ...state,
         isSignedIn: true,
         userId: action.payload
-      }
+      };
     case SIGN_OUT:
       return {
         ...state,
         isSignedIn: false,
         userId: null
-      }
+      };
     default:
       return state;
   }

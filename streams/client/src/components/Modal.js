@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import history from '../history';
 
 // Any click on children divs will throw the event its parent
 // until it reaches 'history.push('/')' (this is propagation).
@@ -8,17 +7,16 @@ import history from '../history';
 // that kind of behavior.
 // We don't want the modal hiding just by clicking anywhere on it.
 
-const Modal = props => {
+const Modal = ({ title, content, actions, onDismiss }) => {
   return ReactDOM.createPortal(
-    <div onClick={() => history.push('/')} className="ui dimmer modals visible active">
+    <div onClick={onDismiss} className="ui dimmer modals visible active">
       <div onClick={e => e.stopPropagation()} className="ui standard modal visible active">
-        <div className="header">Delete Stream</div>
+        <div className="header">{title}</div>
         <div className="content">
-          Are you sure you want to delete this stream?
+          {content}
         </div>
         <div className="actions">
-          <button className="ui primary button">Delete</button>
-          <button className="ui button">Cancel</button>
+          {actions}
         </div>
       </div>
     </div>,

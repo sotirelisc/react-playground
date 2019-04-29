@@ -77,4 +77,7 @@ export const deleteStream = id => async dispatch => {
     type: DELETE_STREAM,
     payload: id
   });
+
+  // Navigate user back to index
+  history.push('/');
 };
